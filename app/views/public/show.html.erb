@@ -1,0 +1,103 @@
+<div class="min-h-screen bg-[#050505] text-white">
+  <div class="mx-auto flex min-h-screen max-w-xl flex-col px-6 py-10 sm:px-8">
+
+    <% user = @user %>
+
+    <!-- HEADER -->
+    <div class="mb-14 flex flex-col items-center text-center gap-5 animate-fade-in">
+      
+      <div class="flex h-16 w-16 items-center justify-center rounded-[1.75rem] bg-violet-500/15 text-violet-200 shadow-[0_20px_70px_rgba(139,92,246,0.25)]">
+        <img src="<%= asset_path('diamond-purple.svg') %>" class="h-9 w-9" />
+      </div>
+
+      <p class="text-xs uppercase tracking-[0.35em] text-violet-300/70">
+        @<%= user.username.to_s.delete_prefix('@') %>
+      </p>
+
+      <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
+        Bio pessoal escura, direta e de alto impacto
+      </h1>
+
+      <p class="max-w-md text-sm leading-7 text-white/60">
+        <%= user.bio.presence || "Empreendedor | Dicas que vendem" %>
+      </p>
+    </div>
+
+    <!-- LINKS -->
+    <div class="space-y-4">
+      <% if @links.any? %>
+
+        <% @links.each do |link| %>
+          <%= link_to "/l/#{link.id}", target: "_blank", rel: "noopener noreferrer",
+              class: "group block rounded-[2rem] border border-white/10 bg-[#09090b]/95 px-5 py-6
+                      shadow-[0_25px_80px_rgba(0,0,0,0.25)]
+                      transition duration-300 ease-out
+                      hover:-translate-y-1 hover:scale-[1.02]
+                      active:scale-[0.98]
+                      hover:border-violet-400/40 hover:bg-violet-600/10 cursor-pointer" do %>
+
+            <div class="flex items-center gap-4">
+
+              <!-- ICON -->
+              <div class="flex h-14 w-14 items-center justify-center rounded-3xl 
+                          bg-white/5 text-xl text-violet-300 
+                          transition duration-300 group-hover:bg-violet-500/20">
+                <span>
+                  <%= link.respond_to?(:icon) && link.icon.present? ? link.icon : "🔗" %>
+                </span>
+              </div>
+
+              <!-- TEXT -->
+              <div class="min-w-0">
+                <p class="truncate text-lg font-semibold tracking-tight">
+                  <%= link.title.presence || "Abrir link" %>
+                </p>
+
+                <p class="mt-1 truncate text-sm text-white/50">
+                  <%= URI.parse(link.url).host rescue link.url %>
+                </p>
+
+                <!-- CLICKS -->
+                <p class="mt-1 text-xs text-white/30">
+                  <%= link.clicks || 0 %> cliques
+                </p>
+              </div>
+
+              <!-- STATUS -->
+              <div class="ml-auto hidden sm:flex items-center gap-2 text-xs text-violet-200">
+                <span class="h-2 w-2 rounded-full bg-violet-400 animate-pulse"></span>
+                ativo
+              </div>
+
+            </div>
+          <% end %>
+        <% end %>
+
+      <% else %>
+
+        <!-- EMPTY STATE -->
+        <div class="rounded-[2rem] border border-dashed border-white/10 bg-[#09090b]/95 px-6 py-16 text-center shadow-[0_25px_80px_rgba(0,0,0,0.18)]">
+          <p class="text-xs uppercase tracking-[0.35em] text-violet-300/70">
+            Sem links ativos
+          </p>
+
+          <h2 class="mt-6 text-3xl font-semibold tracking-tight">
+            Ainda não há conteúdo
+          </h2>
+
+          <p class="mt-3 text-sm text-white/60 max-w-md mx-auto">
+            Adicione seus primeiros links no painel para transformar seu perfil numa bio de alta conversão.
+          </p>
+        </div>
+
+      <% end %>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto pt-12 text-center text-xs text-white/30">
+      Powered by 
+      <%= link_to "BioDiamante", "/", class: "text-violet-300 hover:text-violet-200 transition" %>
+    </footer>
+
+  </div>
+</div>

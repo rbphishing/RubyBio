@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-[#050505] text-white px-6 py-10">
+  <div class="mx-auto max-w-6xl">
+    <div class="rounded-[2.5rem] border border-white/10 bg-[#09090b]/95 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-8 lg:p-10">
+      <div class="flex flex-col gap-6 lg:items-center lg:justify-between lg:flex-row">
+        <div>
+          <h1 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Meus Links</h1>
+          <p class="mt-3 max-w-2xl text-sm text-white/60">Visão geral dos seus links mais importantes, com cliques, status e ações rápidas.</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <%= link_to "+ Novo Link", new_link_path, class: "inline-flex items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-violet-600 via-purple-600 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_60px_rgba(139,92,246,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_25px_75px_rgba(139,92,246,0.35)]" %>
+        </div>
+      </div>
+
+      <% if @links.present? %>
+        <div class="mt-8 grid gap-5">
+          <% @links.each do |link| %>
+            <div class="overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d0d11]/95 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.25)] transition duration-200 hover:-translate-y-0.5">
+              <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                <div class="flex items-start gap-4">
+                  <div class="mt-1 flex h-12 w-12 items-center justify-center rounded-3xl bg-violet-500/15 text-violet-200 shadow-[0_10px_30px_rgba(139,92,246,0.16)]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-6 w-6"><path d="M7 12l4-4 4 4M7 16l4-4 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="text-lg font-semibold tracking-tight text-white"><%= link.description.presence || "Link ##{link.id}" %></h2>
+                    <p class="mt-2 truncate text-sm text-white/50"><%= link.url %></p>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:items-end sm:text-right">
+                  <span class="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-sm font-semibold text-violet-200">
+                    <span class="mr-2 text-violet-300"><%= link.clicks || 0 %></span>cliques
+                  </span>
+                  <label class="inline-flex items-center gap-3 rounded-full bg-white/5 px-3 py-2 text-sm text-white/70 transition hover:bg-white/10">
+                    <span class="text-sm text-white/60"><%= link.active ? "Ativo" : "Inativo" %></span>
+                    <%= check_box_tag "link_active_#{link.id}", "1", link.active, class: "peer sr-only" %>
+                    <span class="relative inline-flex h-8 w-14 items-center rounded-full bg-white/10 p-1 transition duration-200 ease-out peer-checked:bg-violet-500/70">
+                      <span class="h-6 w-6 rounded-full bg-white shadow-lg transition duration-200 ease-out peer-checked:translate-x-6"></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="mt-6 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-[1fr_auto] sm:items-center">
+                <p class="text-sm leading-6 text-white/60"><%= link.description.presence || "Sem descrição disponível" %></p>
+                <div class="flex flex-wrap items-center justify-start gap-3 sm:justify-end">
+                  <%= link_to "Editar", edit_link_path(link), class: "rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition duration-200 hover:border-violet-400/30 hover:bg-violet-500/10" %>
+                  <%= button_to "Excluir", link_path(link), method: :delete, data: { confirm: "Tem certeza que deseja excluir este link?" }, class: "rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition duration-200 hover:border-red-400/30 hover:bg-red-500/10" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="mt-10 rounded-[2rem] border border-dashed border-white/10 bg-[#0d0d11]/95 p-10 text-center shadow-[0_30px_90px_rgba(0,0,0,0.18)]">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-violet-500/10 text-violet-200 shadow-[0_15px_40px_rgba(139,92,246,0.18)]">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-7 w-7"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2 class="mt-6 text-3xl font-semibold tracking-tight text-white">Nenhum link ainda</h2>
+          <p class="mx-auto mt-3 max-w-xl text-sm text-white/60">Crie o primeiro link e comece a transformar sua bio em uma fonte de conversões de alto impacto.</p>
+          <div class="mt-8">
+            <%= link_to "+ Novo Link", new_link_path, class: "inline-flex items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-violet-600 via-purple-600 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_60px_rgba(139,92,246,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_25px_75px_rgba(139,92,246,0.35)]" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

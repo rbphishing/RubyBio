@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
+  
+  <defs>
+    <filter height="140%" width="140%" y="-20%" x="-20%" id="shadow">
+      <feGaussianBlur stdDeviation="8" in="SourceAlpha"></feGaussianBlur>
+      <feOffset result="offsetblur" dy="8" dx="4"></feOffset>
+      <feComponentTransfer>
+        <feFuncA slope="0.6" type="linear"></feFuncA>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+  </defs>
+
+  
+  <path filter="url(#shadow)" stroke-width="12" stroke="#6B21A8" fill="#8B5CF6" d="M100 20 L160 80 L100 180 L40 80 Z"></path>
+
+  
+  <path opacity="0.75" fill="#C4B5FD" d="M100 35 L145 80 L100 125 L55 80 Z"></path>
+
+  
+  <path opacity="0.65" fill="white" d="M70 55 L95 45 L115 70 Z"></path>
+
+  
+  <circle opacity="0.25" fill="white" r="18" cy="78" cx="100"></circle>
+
+  
+  <path opacity="0.3" stroke-width="6" stroke="#6B21A8" d="M100 20 L100 180"></path>
+  
+  <path opacity="0.3" stroke-width="6" stroke="#6B21A8" d="M40 80 L160 80"></path>
+</svg>
