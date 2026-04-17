@@ -23,6 +23,14 @@ class LinksController < ApplicationController
   def edit
   end
 
+def sort
+  params[:links].each do |link|
+    current_user.links.find(link[:id]).update(position: link[:position])
+  end
+
+  head :ok
+end
+
   def update
     if @link.update(link_params)
         
@@ -32,18 +40,31 @@ class LinksController < ApplicationController
     end
   end
 
-  # 🔥 REDIRECT COM TRACKING
-  def redirect
-    link = Link.find(params[:id])
+def redirect
+  link = Link.find(params[:id])
 
-    if link.active
+  if link.active
+    recent_click = Click.where(
+      link: link,
+      ip: request.remote_ip
+    ).where("created_at >= ?", 10.seconds.ago).exists?
+
+    unless recent_click
+      Click.create(
+        link: link,
+        ip: request.remote_ip,
+        user_agent: request.user_agent
+      )
+
       link.increment!(:clicks)
-      redirect_to link.url, allow_other_host: true
-    else
-      redirect_to "/", alert: "Link inativo"
+      link = Link.find_by(id: params[:id], active: true)
     end
-  end
 
+    redirect_to link.url, allow_other_host: true
+  else
+    redirect_to "/", alert: "Link inativo"
+  end
+end
   def destroy
     @link.destroy
     redirect_to links_path, notice: "Link excluído!"

@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_16_201000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_17_043346) do
+  create_table "clicks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "ip"
+    t.integer "link_id", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.index ["link_id"], name: "index_clicks_on_link_id"
+  end
+
   create_table "links", force: :cascade do |t|
     t.boolean "active"
     t.integer "clicks"
     t.datetime "created_at", null: false
     t.string "icon_url"
+    t.integer "position"
     t.string "title"
     t.datetime "updated_at", null: false
     t.string "url"
@@ -32,5 +42,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_16_201000) do
     t.string "username"
   end
 
+  add_foreign_key "clicks", "links"
   add_foreign_key "links", "users"
 end

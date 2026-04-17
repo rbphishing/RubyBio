@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
-
+post "/links/sort", to: "links#sort"
   # LINKS (CRUD COMPLETO)
   resources :links do
     member do
