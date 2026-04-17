@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-[#050505] text-white">
+  <div class="lg:grid lg:grid-cols-[280px_1fr] lg:min-h-screen">
+    <aside class="hidden lg:flex flex-col border-r border-white/10 bg-[#0A0A0A] px-6 py-8">
+      <div class="mb-12 flex items-center gap-3 border-b border-white/10 pb-8">
+        <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-violet-500/10 text-violet-200 shadow-[0_12px_40px_rgba(139,92,246,0.16)]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-6 w-6"><path d="M12 2l3.5 7.5L22 10l-5 4.8L18.5 22 12 18.7 5.5 22 7 14.8 2 10l6.5-0.5L12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">BioDiamante</p>
+          <h2 class="text-xl font-semibold tracking-tight text-white">Admin</h2>
+        </div>
+      </div>
+
+      <nav class="space-y-1 text-sm font-semibold">
+        <%= link_to "Dashboard", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+        <%= link_to "Meus Links", links_path, class: "group flex items-center rounded-3xl px-4 py-3 bg-white/5 text-white" %>
+        <%= link_to "Análises", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+        <%= link_to "Configurações", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+      </nav>
+
+      <div class="mt-auto pt-8">
+        <%= link_to "Sair", logout_path, method: :delete, class: "group flex items-center rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-red-500/10 hover:text-white" %>
+      </div>
+    </aside>
+
+    <main class="px-6 py-8 lg:px-10">
+      <div class="mb-8 flex flex-col gap-6 rounded-[2.5rem] border border-white/10 bg-[#09090b]/95 p-8 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">Links</p>
+            <h1 class="text-4xl font-semibold tracking-tight text-white">Adicionar novo link</h1>
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">O link que você adicionar aparecerá na sua página pública.</p>
+          </div>
+          <%= link_to "Ver todos", links_path, class: "inline-flex items-center justify-center rounded-[1.75rem] border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:border-violet-400/30 hover:bg-white/10" %>
+        </div>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <section class="rounded-[2.5rem] border border-white/10 bg-[#09090b]/95 p-8 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+          <div class="space-y-6">
+            <div>
+              <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">Novo Link</p>
+              <h2 class="mt-3 text-3xl font-semibold tracking-tight text-white">Adicionar novo link</h2>
+              <p class="mt-2 text-sm text-slate-300">Use este formulário para criar um link que será exibido em seu perfil público.</p>
+            </div>
+
+            <%= form_with model: @link, local: true, html: { class: "space-y-6" } do |f| %>
+              <div>
+                <%= f.label :title, "Título do link", class: "block text-sm font-semibold text-white/70 mb-2 tracking-tight" %>
+                <%= f.text_field :title,
+                      placeholder: "Ex: Loja, Portfólio, Instagram",
+                      class: "w-full rounded-[1.75rem] border border-white/10 bg-[#0b0b11]/90 px-5 py-4 text-white placeholder:text-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.15)] outline-none transition duration-200 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20" %>
+              </div>
+
+              <div>
+                <%= f.label :url, "URL", class: "block text-sm font-semibold text-white/70 mb-2 tracking-tight" %>
+                <%= f.url_field :url,
+                      placeholder: "https://seusite.com",
+                      class: "w-full rounded-[1.75rem] border border-white/10 bg-[#0b0b11]/90 px-5 py-4 text-white placeholder:text-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.15)] outline-none transition duration-200 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20" %>
+              </div>
+
+              <div class="grid gap-4 pt-2 sm:grid-cols-[1fr_auto]">
+                <%= f.submit "Adicionar link",
+                      class: "group inline-flex items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-violet-500 via-fuchsia-500 to-purple-500 px-7 py-4 text-base font-semibold tracking-tight text-white shadow-lg shadow-violet-500/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/30 focus:outline-none focus:ring-4 focus:ring-violet-400/30" %>
+                <%= link_to "Cancelar", links_path,
+                      class: "inline-flex items-center justify-center rounded-[1.75rem] border border-white/10 bg-white/5 px-7 py-4 text-base font-semibold tracking-tight text-slate-200 transition duration-200 hover:border-violet-400/30 hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-violet-400/15" %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+
+        <aside class="space-y-6 rounded-[2.5rem] border border-white/10 bg-[#09090b]/95 p-8 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+          <div class="space-y-3">
+            <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">Contexto rápido</p>
+            <h2 class="text-2xl font-semibold tracking-tight text-white">Novo link</h2>
+            <p class="text-sm leading-6 text-slate-400">Adicione uma URL clara e um título descritivo para aumentar a conversão do seu perfil público.</p>
+          </div>
+          <div class="rounded-[1.75rem] border border-white/10 bg-[#0b0b11]/90 p-5 text-sm text-slate-300">
+            <p class="font-semibold text-white/80">Dica premium</p>
+            <p class="mt-3">Prefira textos curtos e focados, como “Loja”, “Portfólio” ou “Contato”.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>

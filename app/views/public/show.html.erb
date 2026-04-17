@@ -41,10 +41,14 @@
               <!-- ICON -->
               <div class="flex h-14 w-14 items-center justify-center rounded-3xl 
                           bg-white/5 text-xl text-violet-300 
-                          transition duration-300 group-hover:bg-violet-500/20">
-                <span>
-                  <%= link.respond_to?(:icon) && link.icon.present? ? link.icon : "🔗" %>
-                </span>
+                          transition duration-300 group-hover:bg-violet-500/20 overflow-hidden">
+                <% if link.icon_url.present? %>
+                  <img src="<%= link.icon_url %>" alt="<%= link.title %>" class="h-full w-full object-cover" />
+                <% else %>
+                  <span>
+                    <%= link.respond_to?(:icon) && link.icon.present? ? link.icon : "🔗" %>
+                  </span>
+                <% end %>
               </div>
 
               <!-- TEXT -->

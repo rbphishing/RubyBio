@@ -1,0 +1,137 @@
+<div class="min-h-screen bg-[#050505] text-white">
+  <div class="lg:grid lg:grid-cols-[280px_1fr] lg:min-h-screen">
+    
+    <!-- Sidebar -->
+    
+    <aside class="hidden lg:flex flex-col border-r border-white/10 bg-[#0A0A0A] px-6 py-8">
+      <div class="mb-12 flex items-center gap-3 border-b border-white/10 pb-8">
+        <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-violet-500/10 text-violet-200 shadow-[0_12px_40px_rgba(139,92,246,0.16)]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="h-6 w-6"><path d="M12 2l3.5 7.5L22 10l-5 4.8L18.5 22 12 18.7 5.5 22 7 14.8 2 10l6.5-0.5L12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        
+        <div>
+          <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">BioDiamante</p>
+          <h2 class="text-xl font-semibold tracking-tight text-white">Admin</h2>
+        </div>
+      </div>
+      <nav class="space-y-1 text-sm font-semibold">
+        <%= link_to "Dashboard", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+        <%= link_to "Meus Links", links_path, class: "group flex items-center rounded-3xl px-4 py-3 text-white transition bg-white/5 text-white" %>
+        <%= link_to "Análises", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+        <%= link_to "Configurações", "#", class: "group flex items-center rounded-3xl px-4 py-3 text-white/70 transition hover:bg-white/5 hover:text-white" %>
+      </nav>
+      <div class="mt-auto pt-8">
+        <%= link_to "Sair", logout_path, method: :delete, class: "group flex items-center rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-red-500/10 hover:text-white" %>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="px-6 py-8 lg:px-10">
+      
+      <!-- Header Superior -->
+      <p class="text-xs text-white/40 text-center">
+  Status atual: <%= @link.active ? "Ativo" : "Inativo" %>
+</p>
+      <div class="mb-8 flex flex-col gap-6 rounded-[2.5rem] border border-white/10 bg-[#09090b]/95 p-8 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm uppercase tracking-[0.35em] text-violet-300/80">Links</p>
+            <h1 class="text-4xl font-semibold tracking-tight text-white">Editar Link</h1>
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">Atualize as informações do seu link com controle total.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <%= link_to "Ver todos", links_path, class: "inline-flex items-center justify-center rounded-[1.75rem] border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:border-violet-400/30 hover:bg-white/10" %>
+            <%= link_to "Novo link", new_link_path, class: "inline-flex items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-violet-500 via-fuchsia-500 to-purple-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário Centralizado (mantido) -->
+      <div class="flex justify-center">
+        <div class="w-full max-w-md">
+          <div class="rounded-[2rem] border border-white/10 bg-[#09090b]/95 p-8 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+            
+            <h1 class="text-2xl font-semibold text-center mb-6">Editar Link</h1>
+
+            <%= form_with model: @link, method: :patch, local: true, html: { class: "space-y-5" } do |f| %>
+              
+              <!-- Título -->
+              <div>
+                <%= f.label :title, "Título do link", class: "text-sm text-white/70 block mb-2" %>
+                <%= f.text_field :title,
+                      class: "w-full mt-2 px-5 py-4 rounded-[1.75rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20" %>
+              </div>
+
+              <!-- URL -->
+              <div>
+                <%= f.label :url, "URL", class: "text-sm text-white/70 block mb-2" %>
+                <%= f.url_field :url,
+                      class: "w-full mt-2 px-5 py-4 rounded-[1.75rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20" %>
+              </div>
+
+              <!-- Toggle Ativo Corrigido -->
+              <div class="rounded-[1.75rem] border border-white/10 bg-[#0b0b11]/90 p-5">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p class="text-sm font-semibold text-white/80">Link ativo</p>
+                    <p class="text-xs text-slate-400">Ative para exibir no seu perfil público</p>
+                  </div>
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <%= f.check_box :active, class: "peer sr-only" %>
+                    <div class="h-10 w-20 rounded-full border border-white/10 bg-white/5 transition duration-200 peer-checked:bg-violet-500"></div>
+                    <span class="pointer-events-none absolute left-1 top-1 h-8 w-8 rounded-full bg-white shadow-lg transition-all duration-200 peer-checked:translate-x-10 peer-checked:bg-white"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Botão Salvar -->
+              <%= f.submit "Salvar Alterações",
+                    class: "w-full bg-violet-600 hover:bg-violet-700 transition py-4 rounded-[1.75rem] font-semibold cursor-pointer mt-4" %>
+
+            <% end %>
+
+            <div class="mt-6 text-center">
+              <%= link_to "← Voltar", links_path, class: "text-sm text-white/50 hover:text-white" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Script do botão de ícone (mantido) -->
+<script>
+function fetchLinkIcon(linkId) {
+  const btn = document.getElementById('fetch-icon-btn');
+  btn.disabled = true;
+  btn.textContent = 'Carregando...';
+ 
+  fetch(`/links/${linkId}/get_icon`, {
+    method: 'POST',
+    headers: {
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success && data.icon_url) {
+      btn.textContent = '✓ Ícone salvo!';
+      btn.classList.add('bg-emerald-500/20', 'text-emerald-200', 'border-emerald-500/30');
+      btn.classList.remove('bg-violet-500/10', 'text-violet-200', 'border-violet-500/30');
+      setTimeout(() => { location.reload(); }, 1000);
+    } else {
+      btn.textContent = 'Erro ao obter ícone';
+      btn.disabled = false;
+      console.error(data.error);
+    }
+  })
+  .catch(err => {
+    btn.textContent = 'Erro na rede';
+    btn.disabled = false;
+    console.error(err);
+  });
+}
+</script>
